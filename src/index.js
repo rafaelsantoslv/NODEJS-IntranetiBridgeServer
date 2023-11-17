@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const expressValidator = require('express-validator')
+const expressValidator = require("express-validator");
 const connection = require("./app/database/index");
 require("dotenv/config");
 const app = express();
