@@ -12,11 +12,17 @@ module.exports = {
       nome: {
         type: Sequelize.STRING,
       },
-      idade: {
-        type: Sequelize.INTEGER,
-      },
       email: {
         type: Sequelize.STRING,
+      },
+      senha: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      tipo: {
+        allowNull: false,
+        type: Sequelize.ENUM("admin", "suporte", "gerente", "supervisor"),
+        defaultValue: "supervisor",
       },
       createdAt: {
         allowNull: false,

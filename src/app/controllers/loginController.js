@@ -1,46 +1,83 @@
 const { body, validationResult } = require("express-validator");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { password } = require("../config/database");
+const tabUsers = require('../models/tabusers');
 
 const validateLogin = (method) => {
   switch (method) {
     case "verificaUser": {
       return [
         body("email", "email invalido").isEmail().exists(),
-        body("password", "senha Invalida").isLength({ min: 4, max: 18 }),
+        body("senha", "senha Invalida").isLength({ min: 3, max: 18 }),
       ];
     }
     case "verificaRegistro": {
       return [
         body("email", "email invalido").isEmail().exists(),
-        body("password", "Senha invalida").isLength({min: 8, mas: 18})
+        body("password", "Senha invalida").isLength({min: 8, max: 18})
       ]
     }
   }
 };
 
 const verificaLogin = async (req, res) => {
-  const errors = validationResult(req);
-  const { email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10)
-  // console.log(hashedPassword, resultPassword);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  } else if (email === "rafael@gmail.com" && password === "1234") {
-    const token = jwt.sign({userId: 1234, email: 'rafael@gmail.com'}, process.env.JSONWEBTOKEN_SECRET, {expiresIn: '1h'})
-    return res.json({
-      // result: user,
-      token: token
-    });
+  
+  try {
+    const errors = validationResult(req);
+    const { email, senha } = req.body
+
+    if(errors.isEmpty()){
+      const user = await tabUsers.findOne({where: {email: email}})
+      if(user) {
+        const verificaSenha = await bcrypt.compare(senha, user.senha)
+        if(verificaSenha) {
+          const token = jwt.sign({userId: user.id , email: user.email}, process.env.JSONWEBTOKEN_SECRET, {expiresIn: '1h'})
+          return res.status(200).json({status: 200, message: "Logado com sucesso", token: token})
+        }else{
+          return res.status(401).json({status: 401, message: "Email ou senha incorreta"})
+        }
+      }else {
+        return res.status(401).json({status: 401, message: "Email ou Senha Incorreta"})
+      }
+    } else {
+      return res.status(401).json({status: 401, message: errors.array()})
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({message: "Erro interno no servidor"})
   }
+
+
+  // const errors = validationResult(req);
+  // const { email, password } = req.body;
+  // console.log(email, password)
+  // if (!errors.isEmpty()) {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
+  // const user = await tabUsers.findOne({
+  //   where: {
+  //     email: email
+  //   }
+  // })
+  // if (!user) {
+  //   return res.status(401).json({message: "E-mail ou senha não existem"})
+  // }
+  // const senhaValida = await tabUsers.findAll({
+  //   where: {
+  //     senha: password
+  //   }
+  // })
+  // if(!senhaValida){
+  //   return res.status(401).json({message: "E-mail ou senha não existem"})
+  // }
+  // return res.status(200).json({
+  //   // result: user,
+  //   token: token,
+  //   datauser: user
+  // });
+  
 };
 
-const register = async (req, res) => {
-  const errors = validationResult(req);
-  const {email, password} = req.body
-  const resultPassword = await bcrypt.compare(password, //consultadoBanco)
-};
 
 module.exports = {
   verificaLogin,
