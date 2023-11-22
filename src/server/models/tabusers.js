@@ -3,14 +3,7 @@ const { Model, DataTypes } = require("sequelize");
 const connection = require("../database/index");
 
 class tabUsers extends Model {
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
-  static associate(models) {
-    // define association here
-  }
+  static associate(models) {}
 }
 tabUsers.init(
   {
@@ -18,6 +11,7 @@ tabUsers.init(
     email: DataTypes.STRING,
     senha: DataTypes.STRING, // Corrigido para STRING
     tipo: DataTypes.ENUM("admin", "suporte", "gerente", "supervisor"),
+    empresa: DataTypes.STRING
   },
   {
     sequelize: connection,

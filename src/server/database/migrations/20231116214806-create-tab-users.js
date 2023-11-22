@@ -14,6 +14,7 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
+        unique: true
       },
       senha: {
         allowNull: false,
@@ -23,6 +24,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.ENUM("admin", "suporte", "gerente", "supervisor"),
         defaultValue: "supervisor",
+      },
+      empresa: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
