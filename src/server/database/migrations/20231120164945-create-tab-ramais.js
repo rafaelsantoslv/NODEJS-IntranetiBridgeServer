@@ -10,7 +10,8 @@
     type: Sequelize.INTEGER
   },
   ramal: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    unique: true
   },
   status: {
     allowNull: false,

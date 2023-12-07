@@ -6,6 +6,16 @@ const tabRamais = require('@models/tabramais');
 
 
 const adicionaRamal = async (req, res) => {
+
+    const token = req.header('Authorization')
+
+    try {
+        jwt.verify(token, process.env.JSONWEBTOKEN_SECRET)
+        console.log("Validado com sucesso")
+    } catch (error) {
+        return res.status(401).json({message: "Token Inválido"})
+    }
+
     try {
         const errors = validationResult(req);
         
@@ -26,16 +36,14 @@ const adicionaRamal = async (req, res) => {
             empresa: empresa
         })
 
-
         return res.status(201).json({status:201, message: "created"})
 
     } catch(error) {
-        console.log(error)
+        // console.log(error)
         // const messageError = error
         return res.status(401).json({message: "Erro ao enviar registro", error: error})
     }
 }
-
 
 module.exports = {
     adicionaRamal
