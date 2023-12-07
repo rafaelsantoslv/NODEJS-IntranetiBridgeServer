@@ -10,7 +10,7 @@
     type: Sequelize.INTEGER
   },
   ramal: {
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   status: {
     allowNull: false,
@@ -31,6 +31,9 @@
     type: Sequelize.STRING
   },
   instalacao: {
+    type: Sequelize.STRING
+  },
+  empresa: {
     type: Sequelize.STRING
   },
   createdAt: {

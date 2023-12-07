@@ -1,28 +1,28 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+const {Model, DataTypes} = require('sequelize');
+const connection = require("../database/index")
+// const tabUsers = require('./tabusers');
+
   class tabRamais extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
     }
   }
   tabRamais.init({
-    ramal: DataTypes.INTEGER,
+    ramal: DataTypes.STRING,
     status: DataTypes.STRING,
+    registro: DataTypes.STRING,
     senha: DataTypes.STRING,
     nomeOperador: DataTypes.STRING,
     anydesk: DataTypes.STRING,
-    instalacao: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'tabRamais',
+    instalacao: DataTypes.STRING,
+    empresa: DataTypes.STRING
+  },
+  {
+    sequelize: connection,
+    tableName: 'tabRamais',
   });
-  return tabRamais;
-};
+  // return tabRamais;
+
+
+
+module.exports = tabRamais;
