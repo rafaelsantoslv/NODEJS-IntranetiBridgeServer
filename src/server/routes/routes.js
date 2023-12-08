@@ -40,4 +40,7 @@ routes.get("/api/ramal/:id", verificaToken, ramalController.selecionaRamal);
 // UPDATE RAMAL
 routes.put("/api/ramal/:id", verificaToken, ramalController.atualizaRamal);
 
+// DELETE RAMAL
+routes.delete("/api/ramal/:id", verificaToken, ramalController.deleteRamal);
+
 module.exports = routes;

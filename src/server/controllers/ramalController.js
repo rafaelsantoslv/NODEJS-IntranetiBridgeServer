@@ -129,9 +129,37 @@ const selecionaRamal = async (req, res) => {
   }
 };
 
+// DELETA RAMAL
+const deleteRamal = async (req, res) => {
+  const ramalId = req.params.id;
+
+  try {
+    const existingRamal = await tabRamais.findByPk(ramalId);
+
+    if (!existingRamal) {
+      return res
+        .status(404)
+        .json({ status: 404, message: "Ramal não encontrado" });
+    }
+
+    await existingRamal.destroy();
+
+    return res
+      .status(200)
+      .json({ status: 200, message: "Ramal excluído com sucesso" });
+  } catch (error) {
+    return res.status(500).json({
+      status: 500,
+      message: "Erro ao excluir ramal",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   adicionaRamal,
   listaRamais,
   selecionaRamal,
   atualizaRamal,
+  deleteRamal,
 };
