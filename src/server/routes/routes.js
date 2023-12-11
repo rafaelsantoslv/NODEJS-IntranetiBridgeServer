@@ -2,9 +2,11 @@ const express = require("express");
 const { validateAuth } = require("@middleware/authMiddleware");
 const { validateRamal } = require("@middleware/ramalMiddleware");
 const { verificaToken } = require("@middleware/jwtMiddleware");
+const { validateFuncionario } = require("@middleware/funcionarioMiddleware");
 
 const ramalController = require("@controllers/ramalController");
 const loginController = require("@controllers/loginController");
+const funcionarioController = require("@controllers/funcionarioController");
 
 const routes = express.Router();
 
@@ -20,7 +22,7 @@ routes.post(
   loginController.verificaRegistro,
 );
 
-//// ROTAS DE RAMAL ////
+/////////////////////////////////////////////////////////////////// ROTAS DE RAMAL ////////////////////////////////////////////////////
 
 // ADICIONAR RAMAL
 routes.post(
@@ -42,5 +44,14 @@ routes.put("/api/ramal/:id", verificaToken, ramalController.atualizaRamal);
 
 // DELETE RAMAL
 routes.delete("/api/ramal/:id", verificaToken, ramalController.deleteRamal);
+
+//////////////////////////////////////////////////////////////////// ROTAS FUNCIONÁRIO //////////////////////////////////////////////////
+
+routes.post(
+  "/api/funcionario",
+  verificaToken,
+  validateFuncionario("verificaFuncionario"),
+  funcionarioController.adicionarFuncionario,
+);
 
 module.exports = routes;

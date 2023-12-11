@@ -17,6 +17,15 @@ const validateRamal = (method) => {
         body("nomeOperador").exists().withMessage("Nome é Obrigatório"),
         body("empresa").exists().withMessage("Empresa é obrigatório"),
       ];
+    case "updateRamal":
+      return [
+        body("ramal")
+          .isLength({ min: 4, max: 10 })
+          .withMessage("Ramal precisa ser de 4 a 10 digitos"),
+        body("senha")
+          .isLength({ min: 5, max: 20 })
+          .withMessage("Senha Inválida. Deve ter entre 5 a 20 caracteres."),
+      ];
   }
 };
 

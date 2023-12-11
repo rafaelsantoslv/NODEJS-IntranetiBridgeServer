@@ -1,13 +1,13 @@
-'use strict';
-const {Model, DataTypes} = require('sequelize');
-const connection = require("../database/index")
+"use strict";
+const { Model, DataTypes } = require("sequelize");
+const connection = require("../database/index");
 // const tabUsers = require('./tabusers');
 
-  class tabRamais extends Model {
-    static associate(models) {
-    }
-  }
-  tabRamais.init({
+class tabRamais extends Model {
+  static associate(models) {}
+}
+tabRamais.init(
+  {
     ramal: DataTypes.STRING,
     status: DataTypes.STRING,
     registro: DataTypes.STRING,
@@ -15,14 +15,13 @@ const connection = require("../database/index")
     nomeOperador: DataTypes.STRING,
     anydesk: DataTypes.STRING,
     instalacao: DataTypes.STRING,
-    empresa: DataTypes.STRING
+    empresa: DataTypes.STRING,
   },
   {
     sequelize: connection,
-    tableName: 'tabRamais',
-  });
-  // return tabRamais;
-
-
+    tableName: "tabRamais",
+  },
+);
+// return tabRamais;
 
 module.exports = tabRamais;

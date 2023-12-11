@@ -4,12 +4,6 @@ const validateFuncionario = (method) => {
   switch (method) {
     case "verificaFuncionario":
       return [
-        body("id")
-          .notEmpty()
-          .isInt()
-          .withMessage(
-            'O campo "id" é obrigatório e deve ser um número inteiro.',
-          ),
         body("firstname")
           .notEmpty()
           .isString()

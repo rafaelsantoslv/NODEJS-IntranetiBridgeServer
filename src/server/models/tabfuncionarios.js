@@ -1,19 +1,12 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class tabFuncionarios extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  tabFuncionarios.init({
+"use strict";
+const { Model, DataTypes } = require("sequelize");
+const connection = require("../database/index");
+
+class tabFuncionarios extends Model {
+  static associate(models) {}
+}
+tabFuncionarios.init(
+  {
     firstname: DataTypes.STRING,
     secondname: DataTypes.STRING,
     datanasc: DataTypes.DATE,
@@ -49,10 +42,12 @@ module.exports = (sequelize, DataTypes) => {
     salario: DataTypes.DECIMAL,
     gender: DataTypes.STRING,
     maritalStatus: DataTypes.STRING,
-    hasDisability: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'tabFuncionarios',
-  });
-  return tabFuncionarios;
-};
+    hasDisability: DataTypes.BOOLEAN,
+  },
+  {
+    sequelize: connection,
+    tableName: "tabfuncionarios",
+  },
+);
+
+module.exports = tabFuncionarios;
