@@ -47,11 +47,39 @@ routes.delete("/api/ramal/:id", verificaToken, ramalController.deleteRamal);
 
 //////////////////////////////////////////////////////////////////// ROTAS FUNCIONÁRIO //////////////////////////////////////////////////
 
+// ADICIONAR FUNCIONÁRIO
 routes.post(
   "/api/funcionario",
   verificaToken,
   validateFuncionario("verificaFuncionario"),
   funcionarioController.adicionarFuncionario,
+);
+
+// LISTAR FUNCIONÁRIOS
+routes.get(
+  "/api/funcionario",
+  verificaToken,
+  funcionarioController.listarFuncionarios,
+);
+
+// UPDATE FUNCIONÁRIO
+routes.put(
+  "/api/funcionario/:id",
+  verificaToken,
+  funcionarioController.atualizaFuncionario,
+);
+
+// SELECIONA FUNCIONÁRIO
+routes.get(
+  "/api/funcionario/:id",
+  verificaToken,
+  funcionarioController.selecionaFuncionario,
+);
+// DELETE RAMAL
+routes.delete(
+  "/api/funcionario/:id",
+  verificaToken,
+  funcionarioController.deleteFuncionario,
 );
 
 module.exports = routes;
