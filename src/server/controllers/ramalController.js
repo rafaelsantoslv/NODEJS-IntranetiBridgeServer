@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const tabRamais = require("@models/tabramais");
 
 //ADICIONAR RAMAL
-const adicionaRamal = async (req, res) => {
+const adicionaRamal = async (req, res, next) => {
   try {
     const errors = validationResult(req);
 
@@ -36,30 +36,28 @@ const adicionaRamal = async (req, res) => {
       .status(201)
       .json({ status: 201, message: "created", data: req.user });
   } catch (error) {
-    return res
-      .status(401)
-      .json({ message: "Erro ao enviar registro", error: error });
+    next(error);
   }
 };
 
 // LISTAR RAMAIS
 
-const listaRamais = async (req, res) => {
+const listaRamais = async (req, res, next) => {
   try {
+    // throw new Error("Erro simulado");
+
     const ramais = await tabRamais.findAll();
     return res
       .status(200)
       .json({ status: 201, message: "Sucess", response: ramais });
   } catch (error) {
-    return res
-      .status(401)
-      .json({ status: 401, message: "error!", error: error });
+    next(error);
   }
 };
 
 // UPDATE RAMAL
 
-const atualizaRamal = async (req, res) => {
+const atualizaRamal = async (req, res, next) => {
   try {
     const ramalId = req.params.id;
 
@@ -97,17 +95,13 @@ const atualizaRamal = async (req, res) => {
       .status(200)
       .json({ status: 401, message: "Ramal atualizado com sucesso" });
   } catch (error) {
-    return res.status(500).json({
-      status: 500,
-      message: "Erro ao atualizar ramal",
-      error: error.message,
-    });
+    next(error);
   }
 };
 
 // SELECIONA RAMAL
 
-const selecionaRamal = async (req, res) => {
+const selecionaRamal = async (req, res, next) => {
   try {
     const ramalId = req.params.id;
 
@@ -121,16 +115,12 @@ const selecionaRamal = async (req, res) => {
       .status(200)
       .json({ status: 200, message: "Dados do ramal", data: existingRamal });
   } catch (error) {
-    return res.status(500).json({
-      status: 500,
-      message: "Erro ao obter detalhes do ramal",
-      error: error.message,
-    });
+    next(error);
   }
 };
 
 // DELETA RAMAL
-const deleteRamal = async (req, res) => {
+const deleteRamal = async (req, res, next) => {
   const ramalId = req.params.id;
 
   try {
@@ -148,11 +138,7 @@ const deleteRamal = async (req, res) => {
       .status(200)
       .json({ status: 200, message: "Ramal excluído com sucesso" });
   } catch (error) {
-    return res.status(500).json({
-      status: 500,
-      message: "Erro ao excluir ramal",
-      error: error.message,
-    });
+    next(error);
   }
 };
 
