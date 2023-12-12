@@ -3,11 +3,13 @@ const { validateAuth } = require("@middleware/authMiddleware");
 const { validateRamal } = require("@middleware/ramalMiddleware");
 const { verificaToken } = require("@middleware/jwtMiddleware");
 const { validateFuncionario } = require("@middleware/funcionarioMiddleware");
+const { validateEmpresa } = require("@middleware/empresaMiddleware");
 const errorHandler = require("@middleware/errorsMiddleware");
 
 const ramalController = require("@controllers/ramalController");
 const loginController = require("@controllers/loginController");
 const funcionarioController = require("@controllers/funcionarioController");
+const empresaController = require("@controllers/empresaController");
 
 const routes = express.Router();
 
@@ -81,6 +83,15 @@ routes.delete(
   "/api/v1/funcionario/:id",
   verificaToken,
   funcionarioController.deleteFuncionario,
+);
+
+//////////////////////////////////////////////////////////////////// ROTAS EMPRESAS //////////////////////////////////////////////////
+
+routes.post(
+  "/api/v1/empresa",
+  verificaToken,
+  validateEmpresa("verificaEmpresa"),
+  empresaController.adicionarEmpresa,
 );
 
 routes.use(errorHandler);

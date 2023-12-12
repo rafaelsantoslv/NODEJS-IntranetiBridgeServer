@@ -34,7 +34,7 @@ const adicionaRamal = async (req, res, next) => {
     });
     return res
       .status(201)
-      .json({ status: 201, message: "created", data: req.user });
+      .json({ status: 201, message: "Created", data: req.user });
   } catch (error) {
     next(error);
   }

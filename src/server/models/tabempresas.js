@@ -1,23 +1,23 @@
 "use strict";
-const { Model } = require("sequelize");
-module.exports = (sequelize, DataTypes) => {
-  class tabEmpresas extends Model {
-    static associate(models) {
-      // define association here
-    }
-  }
-  tabEmpresas.init(
-    {
-      razaoSocial: DataTypes.STRING,
-      nomeFantasia: DataTypes.STRING,
-      cnpj: DataTypes.INTEGER,
-      emailPrincipal: DataTypes.STRING,
-      prefixo: DataTypes.INTEGER,
-    },
-    {
-      sequelize,
-      modelName: "tabEmpresas",
-    },
-  );
-  return tabEmpresas;
-};
+const { Model, DataTypes } = require("sequelize");
+const connection = require("../database/index");
+
+class tabEmpresas extends Model {
+  static associate(models) {}
+}
+tabEmpresas.init(
+  {
+    razaoSocial: DataTypes.STRING,
+    nomeFantasia: DataTypes.STRING,
+    cnpj: DataTypes.INTEGER,
+    emailPrincipal: DataTypes.STRING,
+    servico: DataTypes.STRING,
+    prefixo: DataTypes.INTEGER,
+  },
+  {
+    sequelize: connection,
+    tableName: "tabempresas",
+  },
+);
+
+module.exports = tabEmpresas;
