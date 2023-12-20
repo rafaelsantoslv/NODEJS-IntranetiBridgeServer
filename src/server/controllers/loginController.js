@@ -8,6 +8,7 @@ const verificaLogin = async (req, res) => {
   try {
     const errors = validationResult(req);
 
+    // console.log(req);
     if (!errors.isEmpty()) {
       return res.status(401).json({ status: 401, message: errors.array() });
     }

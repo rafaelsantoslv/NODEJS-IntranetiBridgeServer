@@ -1,8 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const cors = require("cors");
 
-require("express-validator");
+// require("express-validator");
 require("./database/index");
 require("./lib/moduleAliases");
 require("dotenv/config");
@@ -10,7 +11,9 @@ require("dotenv/config");
 const app = express();
 const routes = require("@routes/routes");
 
-app.use(bodyParser.json());
+app.use(cors());
+app.use(express.json());
+// app.use(bodyParser.json());
 app.use(routes);
 app.use(express.static(path.join(__dirname, "app", "public")));
 

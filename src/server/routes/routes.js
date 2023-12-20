@@ -14,13 +14,13 @@ const empresaController = require("@controllers/empresaController");
 const routes = express.Router();
 
 // ROTAS DE AUTH e REGISTER
-routes.get(
+routes.post(
   "/api/v1/auth",
   validateAuth("verificaUser"),
   loginController.verificaLogin,
 );
 routes.post(
-  "/api/v1/auth",
+  "/api/v1/register",
   validateAuth("verificaRegistro"),
   loginController.verificaRegistro,
 );
